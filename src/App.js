@@ -8,7 +8,8 @@ import data from "./data.js";
 import Logo from "./components/DisplayComponents/Logo";
 import Display from "./components/DisplayComponents/Display.js";
 import SpecialButton from "./components/ButtonComponents/SpecialButtons/SpecialButton";
-
+import OperatorButton from "./components/ButtonComponents/OperatorButtons/OperatorButton";
+import NumberButton from "./components/ButtonComponents/NumberButtons/NumberButton";
 function App() {
   // STEP 5 - After you get the components displaying using the provided data file, write your state hooks here.
   // Once the state hooks are in place write some functions to hold data in state and update that data depending on what it needs to be doing
@@ -18,21 +19,49 @@ function App() {
   
   console.log(data)
   const [display, setDisplay] = useState(0)
+
+  let specialClickHandler = (buttonName) => {
+    console.log(buttonName);
+    setDisplay = buttonName;
+  }
   
   return (
     <div className="container">
       <Logo />
+      
       <div className="App">
         <Display
-        zeroOutDisplay={display}
+          zeroOutDisplay={display}
         />
+      <section className="buttonContainer">   
+          {
+            data.specials.map (x => {
+              return (
+                <SpecialButton 
+                  buttonName = {x} 
+                  clickHandler = {specialClickHandler}
+                />
+              )
+            })
+          }
+          <OperatorButton 
+            buttonName = {data.operators[0].char}
+            clickHandler = {specialClickHandler}
+          />
+      </section>
+
+      <section className="buttonContainer">
         {
-          data.specials.map (x => {
-            return (
-              <SpecialButton buttonName ={x} />
-            )
-          })
+           data.numbers.map (x => {
+             return (
+              <NumberButton 
+                buttonName = {x}
+                clickHandler = {specialClickHandler}
+              />
+             )
+           })
         }
+      </section>
       </div>
     </div>
   );

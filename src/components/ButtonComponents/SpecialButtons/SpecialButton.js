@@ -4,7 +4,12 @@ const SpecialButton = (bananaButton) => {
   console.log(bananaButton)
   return (
     <>
-      <button className ="button">
+      <button 
+        className ="button"
+        onClick= {
+          () => bananaButton.clickHandler(bananaButton.buttonName)
+        }
+      >
         {bananaButton.buttonName}
       </button>
     </>
