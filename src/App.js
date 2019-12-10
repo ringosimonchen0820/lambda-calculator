@@ -22,46 +22,74 @@ function App() {
 
   let specialClickHandler = (buttonName) => {
     console.log(buttonName);
-    setDisplay = buttonName;
+    setDisplay(buttonName);
   }
   
+  let operatorIndex = 0;
+
+  let buttonDisplayHell = (x, i) => {
+    console.log(x)  
+    if(i === 0 || i===3 || i===6 || i===9){
+      return (
+        <>
+          <OperatorButton
+            buttonName={data.operators[operatorIndex++].char}
+            clickHandler={specialClickHandler}
+          />
+          <NumberButton 
+            buttonName={x}
+            clickHandler={specialClickHandler}
+          />
+        </>
+      )
+    }else if(i===10){
+      return (
+        <>
+          <NumberButton 
+            buttonName={x}
+            clickHandler={specialClickHandler}
+          />
+          <OperatorButton
+            buttonName={data.operators[operatorIndex++].char}
+            clickHandler={specialClickHandler}
+          />
+        </>
+      )
+    }
+    else{
+      return (
+        <NumberButton 
+          buttonName={x}
+          clickHandler={specialClickHandler}
+        />
+      )
+    }
+  }
+
   return (
     <div className="container">
       <Logo />
-      
       <div className="App">
-        <Display
-          zeroOutDisplay={display}
+        <Display 
+          horribleDisplayDefaultedToZero={display}
         />
-      <section className="buttonContainer">   
+        <section className="buttonContainer">
           {
-            data.specials.map (x => {
+            data.specials.map(x=>{
               return (
                 <SpecialButton 
-                  buttonName = {x} 
-                  clickHandler = {specialClickHandler}
+                  buttonName={x}
+                  clickHandler={specialClickHandler}
                 />
               )
             })
           }
-          <OperatorButton 
-            buttonName = {data.operators[0].char}
-            clickHandler = {specialClickHandler}
-          />
-      </section>
-
-      <section className="buttonContainer">
-        {
-           data.numbers.map (x => {
-             return (
-              <NumberButton 
-                buttonName = {x}
-                clickHandler = {specialClickHandler}
-              />
-             )
-           })
-        }
-      </section>
+          {
+            data.numbers.map((x, i) => {
+                return buttonDisplayHell(x, i)
+            })
+          }
+        </section>
       </div>
     </div>
   );
