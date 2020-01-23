@@ -21,8 +21,9 @@ const Numbers = (props) => {
       {buttonNumbers.map(number => {
         return (
           <NumberButton 
-            key = {number}
-            text = {number} 
+            key={number}
+            text={number} 
+            addNumber={props.addNumber}
           />
       )})}
     </div>
